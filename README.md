@@ -63,7 +63,6 @@ cd logmanager
 ```
 
 The application is available at `http://localhost:8080`.
-The port can be changed in `src/main/resources/application.properties`:
 
 Entries are stored in `logs/central.log`. The folder and the file are created automatically on first start.
 
