@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log Manager</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Управление на log файлове</h1>
+
+    <div th:if="${info}" class="msg-ok" th:text="${info}"></div>
+    <div th:if="${error}" class="msg-err" th:text="${error}"></div>
+
+    <div class="card stats">
+        <span th:each="s : ${stats}" class="chip"
+              th:classappend="${s.key.name().toLowerCase()}">
+            <span th:text="${s.key}"></span>
+            <span class="count" th:text="${s.value}"></span>
+        </span>
+    </div>
+
+    <div class="card">
+        <h3>Нов запис</h3>
+        <form th:action="@{/logs}" th:method="POST" class="row">
+
+            <select name="level">
+                <option th:each="level : ${levels}" th:value="${level}" th:text="${level}"></option>
+            </select>
+            <input type="text" name="message" placeholder="Съобщение">
+            <button type="submit">Добави</button>
+
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Импорт от файл</h3>
+        <form th:action="@{/logs/import}" method="post" enctype="multipart/form-data" class="row">
+            <input type="file" name="file" accept=".log,.txt">
+            <button type="submit">Импортирай</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Преглед по тип</h3>
+        <form th:action="@{/}" method="get" class="row">
+            <select name="level" onchange="this.form.submit()">
+                <option value="">Всички</option>
+                <option th:each="l : ${levels}" th:value="${l}" th:text="${l}"
+                        th:selected="${l == selected}"></option>
+            </select>
+        </form>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Време</th>
+                    <th>Тип</th>
+                    <th>Съобщение</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e : ${logs}">
+                    <td class="time" th:text="${#temporals.format(e.timestamp, 'dd.MM.yyyy HH:mm:ss')}"></td>
+                    <td>
+                        <span class="badge" th:classappend="${e.cssClass}" th:text="${e.level}"></span>
+                    </td>
+                    <td class="msg" th:text="${e.message}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(logs)}">
+                    <td colspan="3" class="empty">Няма записи.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
