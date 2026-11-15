@@ -10,8 +10,8 @@ public class AppConfig {
 
     @Bean
     public LogFileManager logFileManager() {
-        LogFileManager manager = LogFileManager.getInstance(); // Singleton
-        manager.addObserver(new ConsoleAlertObserver());       // Observer
+        LogFileManager manager = LogFileManager.getInstance();
+        manager.addObserver(new ConsoleAlertObserver());
         return manager;
     }
 }

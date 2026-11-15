@@ -36,7 +36,6 @@ public final class LogFileManager {
         }
     }
 
-    /** Double-checked locking. */
     public static LogFileManager getInstance() {
         if (instance == null) {
             synchronized (LogFileManager.class) {
@@ -52,7 +51,6 @@ public final class LogFileManager {
         observers.add(observer);
     }
 
-    /** Само една нишка може да пише в даден момент. */
     public void append(LogEntry entry) {
         lock.writeLock().lock();
         try {
@@ -67,7 +65,6 @@ public final class LogFileManager {
         observers.forEach(o -> o.onLogAdded(entry));
     }
 
-    /** Четенето е паралелно, но не се случва по време на запис. */
     public List<LogEntry> readAll() {
         lock.readLock().lock();
         try {

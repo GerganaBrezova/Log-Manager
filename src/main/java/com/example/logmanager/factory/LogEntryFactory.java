@@ -35,7 +35,6 @@ public final class LogEntryFactory {
         return creator.apply(timestamp, message);
     }
 
-    /** Създава запис от ред във файла; невалидните редове се пропускат. */
     public static Optional<LogEntry> fromLine(String line) {
         if (line == null) return Optional.empty();
         String[] parts = line.split(" \\| ", 3);

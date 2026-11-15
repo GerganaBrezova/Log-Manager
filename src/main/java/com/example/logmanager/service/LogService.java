@@ -30,7 +30,6 @@ public class LogService {
         manager.append(LogEntryFactory.create(level, message));
     }
 
-    /** level == null означава "всички". Най-новите са първи. */
     public List<LogEntry> find(LogLevel level) {
         List<LogEntry> result = manager.readAll().stream()
                 .filter(e -> level == null || e.getLevel() == level)
@@ -48,7 +47,6 @@ public class LogService {
         return stats;
     }
 
-    /** Импортира валидните редове от качен файл в централния. */
     public int importFile(MultipartFile upload) throws IOException {
         String content = new String(upload.getBytes(), StandardCharsets.UTF_8);
         int count = 0;
