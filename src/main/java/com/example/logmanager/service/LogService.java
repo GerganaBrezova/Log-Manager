@@ -40,6 +40,7 @@ public class LogService {
 
     public Map<LogLevel, Long> stats() {
         Map<LogLevel, Long> stats = new EnumMap<>(LogLevel.class);
+
         for (LogLevel l : LogLevel.values()) {
             stats.put(l, 0L);
         }
@@ -50,6 +51,7 @@ public class LogService {
     public int importFile(MultipartFile upload) throws IOException {
         String content = new String(upload.getBytes(), StandardCharsets.UTF_8);
         int count = 0;
+
         for (String line : content.split("\\R")) {
             Optional<LogEntry> entry = LogEntryFactory.fromLine(line);
             if (entry.isPresent()) {

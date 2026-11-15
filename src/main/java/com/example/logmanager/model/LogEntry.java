@@ -12,6 +12,14 @@ public abstract class LogEntry {
         this.message = message == null ? "" : message.replaceAll("[\\r\\n]+", " ").trim();
     }
 
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
     public abstract LogLevel getLevel();
 
     public String getCssClass() {
@@ -22,11 +30,4 @@ public abstract class LogEntry {
         return timestamp + " | " + getLevel() + " | " + message;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }

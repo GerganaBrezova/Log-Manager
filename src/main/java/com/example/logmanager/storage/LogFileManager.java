@@ -19,7 +19,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public final class LogFileManager {
 
     private static volatile LogFileManager instance;
-
     private final Path file;
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     private final List<LogObserver> observers = new CopyOnWriteArrayList<>();
